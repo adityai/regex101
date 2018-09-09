@@ -59,7 +59,7 @@ else:
     print("Invalid US phone: " + subject)
 
 # Replace
-# (\1)●\2-\3
+# (\1) \2-\3
 result = re.sub(r"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", r"(\1) \2-\3", "1234567890")
 print(result)
 
@@ -81,10 +81,36 @@ else:
 #Page# 268: Find phone numbers in documents
 # Replace ^ and $ with \b boundary
 subject = "2123456789"
-matchobj = re.search(r"\(?\b([0-9]{3})\)?[-.●]?([0-9]{3})[-.●]?([0-9]{4})\b", subject)
+matchobj = re.search(r"\(?\b([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})\b", subject)
 if matchobj:
     print("Valid US phone #: " + matchobj.group(0))
 else:
     print("Invalid US phone #: " + subject)
 
 #Page 270 - 4.3 Validate International Phone Numbers
+
+# Validate Traditional Date Formats
+# Validate dates in the traditional formats mm/dd/yy, mm/dd/yyyy, dd/mm/yy, and dd/mm/yyyy. Use a simple regex that simply checks whether the input looks like a date, without trying to weed out things such as February 31st
+# Solution 1: Match any of these date formats, allowing leading zeros to be omitted:
+subject = "09 01 2000"
+matchobj = re.search(r"^[0-3]?[0-9]/[0-3]?[0-9]/(?:[0-9]{2})?[0-9]{2}$", subject)
+if matchobj:
+    print("Valid date: " + matchobj.group(0))
+else:
+    print("No date: " + subject)
+
+subject = "09/01/2000"
+matchobj = re.search(r"^[0-3]?[0-9]/[0-3]?[0-9]/(?:[0-9]{2})?[0-9]{2}$", subject)
+if matchobj:
+    print("Valid date: " + matchobj.group(0))
+else:
+    print("No date: " + subject)
+
+# Solution 2: Match any of these date formats, requiring leading zeros:
+subject = "9/01/2000"
+matchobj = re.search(r"^[0-3][0-9]/[0-3][0-9]/(?:[0-9][0-9])?[0-9][0-9]$", subject)
+if matchobj:
+    print("Valid date: " + matchobj.group(0))
+else:
+    print("No date: " + subject)
+
