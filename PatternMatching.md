@@ -305,7 +305,7 @@ print(result)
 ### Split a String, Keeping the Regex Matches
 Split a string with HTML tags in it along the HTML tags, and also keep the HTML tags.
 ```
-subject = 'I●like●<b>bold</b>●and●<i>italic</i>●fonts'
+subject = 'I like <b>bold</b> and <i>italic</i> fonts'
 result = re.split("(<[^<>]*>)", subject)
 #To use the same regex repeatedly, use a compiled object:
 reobj = re.compile("(<[^<>]*>)")
